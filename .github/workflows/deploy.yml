@@ -26,4 +26,4 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push Docker image
-        run: docker tag my-backend ghcr.io/${{ github.repository }}:latest && docker push ghcr.io/${{ github.repository }}:latest
+        run: docker tag my-backend ghcr.io/kaustav1999paul/applehub:latest && docker push ghcr.io/kaustav1999paul/applehub:latest
