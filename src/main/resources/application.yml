@@ -11,11 +11,11 @@ spring:
     hikari:
       data-source-properties:
         prepareThreshold: 0
-      max-lifetime: 1800000       # 30 minutes
-      idle-timeout: 600000        # 10 minutes
-      minimum-idle: 2
-      maximum-pool-size: 10       # Increase slightly if needed
-      pool-name: HikariCP
+      max-lifetime: 15000
+      minimum-idle: 1
+      maximum-pool-size: 5
+      connection-timeout: 30000
+      validation-timeout: 5000
       allowPoolSuspension: false
       keepalive-time: 0
 
