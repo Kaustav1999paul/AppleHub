@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.util.Set;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,7 +53,7 @@ public class ProductService {
         );
     }
 
-    public List<ProductResponse> getAllProducts(String category, Long id, Boolean refurbished) {
+    public List<ProductResponse> getAllProducts(String category, UUID id, Boolean refurbished) {
         List<Product> products = productRepository.findAll().stream()
                 .filter(p -> (category == null || p.getCategory().equals(category)))
                 .filter(p -> (id == null || p.getId().equals(id)))
