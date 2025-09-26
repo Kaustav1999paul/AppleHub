@@ -3,25 +3,25 @@ spring:
     name: ecommerce-service
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL}
+    url: ${SPRING_DATASOURCE_URL} # Example: jdbc:postgresql://aws-1-ap-south-1.pooler.supabase.com:6543/dbname?sslmode=require
     username: ${SPRING_DATASOURCE_USERNAME}
     password: ${SPRING_DATASOURCE_PASSWORD}
     driver-class-name: org.postgresql.Driver
 
     hikari:
-      data-source-properties:
-        prepareThreshold: 0
-      max-lifetime: 15000
+      pool-name: HikariCP
       minimum-idle: 1
       maximum-pool-size: 5
-      connection-timeout: 30000
-      validation-timeout: 5000
-      allowPoolSuspension: false
-      keepalive-time: 0
+      idle-timeout: 10000          # 10 seconds
+      max-lifetime: 15000          # 15 seconds to avoid Supabase closing stale connections
+      connection-timeout: 30000    # 30 seconds max wait for a connection
+      validation-timeout: 5000     # 5 seconds to validate connections
+      leak-detection-threshold: 20000
+      test-on-borrow: true
 
   jpa:
     hibernate:
-      ddl-auto: none            # Flyway manages schema/tables
+      ddl-auto: none                # Flyway manages schema/tables
     show-sql: true
     properties:
       hibernate:
@@ -34,9 +34,9 @@ spring:
     schemas:
       - auth_service
       - product_service
-    default-schema: auth_service        # use one schema for Flyway metadata table
+    default-schema: auth_service        # Flyway metadata table schema
     create-schemas: true
-    table: flyway_schema_history        # make sure history table name is consistent
+    table: flyway_schema_history
 
 server:
-  port: ${SERVER_PORT:8081}
+  port: ${PORT:8081}   # Render requires using $PORT for dynamic binding
